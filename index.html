@@ -16,9 +16,10 @@
             height: 100vh;
             overflow: hidden;
             color: white;
+            background-color: #4a4a4a; /* Fallback color */
         }
 
-        .video-container {
+        .background-media {
             position: fixed;
             top: 0;
             left: 0;
@@ -31,6 +32,16 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            display: none; /* Hidden by default */
+        }
+
+        .background-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
         }
 
         .content {
@@ -41,6 +52,7 @@
             align-items: center;
             text-align: center;
             background: rgba(0, 0, 0, 0.4);
+            padding: 20px;
         }
 
         .names {
@@ -90,10 +102,11 @@
     </style>
 </head>
 <body>
-    <div class="video-container">
-        <video id="background-video" autoplay loop muted>
+    <div class="background-media">
+        <!-- Fallback image for mobile -->
+        <img src="wedding-background.jpg" class="background-image" alt="Wedding Background">
+        <video id="background-video" autoplay loop muted playsinline>
             <source src="AnuarSofia.mp4" type="video/mp4">
-            Your browser does not support the video tag.
         </video>
     </div>
 
@@ -106,6 +119,23 @@
     </div>
 
     <script>
+        // Check if device can play video
+        document.addEventListener('DOMContentLoaded', function() {
+            const video = document.getElementById('background-video');
+            const img = document.querySelector('.background-image');
+            
+            // Function to check if device can autoplay video
+            function canPlayVideo() {
+                const videoTest = document.createElement('video');
+                return !!(videoTest.canPlayType && videoTest.canPlayType('video/mp4').replace(/no/, ''));
+            }
+
+            if (canPlayVideo()) {
+                video.style.display = 'block';
+                img.style.display = 'none';
+            }
+        });
+
         function addToCalendar() {
             const event = {
                 title: "Sofia & Anuar's Wedding",
