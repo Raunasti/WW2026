@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sofia & Anuar - Save the Date</title>
+    <title>Sofia & Anuar's Wedding</title>
     <style>
         * {
             margin: 0;
@@ -15,118 +15,123 @@
             font-family: 'Arial', sans-serif;
             height: 100vh;
             overflow: hidden;
-            background: black;
+            color: white;
         }
 
-        #video-wrapper {
+        .video-container {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 1;
+            z-index: -1;
         }
 
-        #bgVideo {
+        #background-video {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
 
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 2;
+        .content {
+            height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            color: white;
             text-align: center;
+            background: rgba(0, 0, 0, 0.4);
         }
 
-        h1 {
-            font-size: 4em;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        .names {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 300;
         }
 
-        .date {
-            font-size: 2em;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        .save-date {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
         }
 
-        #mute-btn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.7);
+        .date, .location {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .calendar-btn {
+            margin-top: 2rem;
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #333;
             border: none;
-            padding: 10px 20px;
             border-radius: 5px;
             cursor: pointer;
-            z-index: 3;
+            transition: all 0.3s ease;
         }
 
-        @media screen and (max-width: 768px) {
-            h1 {
-                font-size: 2.5em;
+        .calendar-btn:hover {
+            background-color: white;
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            .names {
+                font-size: 2.5rem;
             }
-            .date {
-                font-size: 1.5em;
+            .save-date {
+                font-size: 1.2rem;
+            }
+            .date, .location {
+                font-size: 1.5rem;
             }
         }
     </style>
 </head>
 <body>
-    <div id="video-wrapper">
-        <video id="bgVideo" playsinline autoplay muted loop>
-            <source src="your-video.mp4" type="video/mp4">
+    <div class="video-container">
+        <video id="background-video" autoplay loop muted>
+            <source src="AnaurSofia.mp4" type="video/mp4">
+            Your browser does not support the video tag.
         </video>
     </div>
 
-    <div class="overlay">
-        <h1>Sofia & Anuar</h1>
-        <div class="date">Save The Date</div>
-        <div class="date">[Your Wedding Date]</div>
+    <div class="content">
+        <h1 class="names">Sofia & Anuar</h1>
+        <p class="save-date">Save the Date</p>
+        <p class="date">March 14th, 2026</p>
+        <p class="location">Miami, Florida</p>
+        <button class="calendar-btn" onclick="addToCalendar()">Add to Calendar</button>
     </div>
 
-    <button id="mute-btn">🔈 Toggle Sound</button>
-
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const video = document.getElementById('bgVideo');
-            const muteBtn = document.getElementById('mute-btn');
-            
-            // Force video play on page load
-            function playVideo() {
-                video.play().catch(function(error) {
-                    console.log("Video play failed:", error);
-                });
-            }
+        function addToCalendar() {
+            const event = {
+                title: "Sofia & Anuar's Wedding",
+                start: new Date('2026-03-14'),
+                location: 'Miami, Florida'
+            };
 
-            // Try to play video immediately
-            playVideo();
+            const icsFile = 
+                'BEGIN:VCALENDAR\n' +
+                'VERSION:2.0\n' +
+                'BEGIN:VEVENT\n' +
+                'DTSTART:' + event.start.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z\n' +
+                'SUMMARY:' + event.title + '\n' +
+                'LOCATION:' + event.location + '\n' +
+                'END:VEVENT\n' +
+                'END:VCALENDAR';
 
-            // Try again after a short delay
-            setTimeout(playVideo, 1000);
-
-            // Handle mute button
-            muteBtn.addEventListener('click', function() {
-                video.muted = !video.muted;
-                muteBtn.textContent = video.muted ? '🔈 Toggle Sound' : '🔊 Toggle Sound';
-                playVideo();
-            });
-
-            // Handle user interaction
-            document.addEventListener('click', playVideo, { once: true });
-            document.addEventListener('touchstart', playVideo, { once: true });
-        });
+            const blob = new Blob([icsFile], { type: 'text/calendar' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'wedding.ics';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
     </script>
 </body>
 </html>
