@@ -13,86 +13,84 @@
 
         body {
             font-family: 'Arial', sans-serif;
-            height: 100vh;
-            overflow: hidden;
+            min-height: 100vh;
             color: white;
-            background-color: #4a4a4a; /* Fallback color */
+            position: relative;
+            background-color: #4a4a4a;
         }
 
-        .background-media {
+        #video-bg {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -1;
+            object-fit: cover;
+        }
+
+        .overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            background: rgba(0, 0, 0, 0.4);
             z-index: -1;
         }
 
-        #background-video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: none; /* Hidden by default */
-        }
-
-        .background-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
-
-        .content {
-            height: 100vh;
+        .container {
+            position: relative;
+            z-index: 1;
+            padding: 20px;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            background: rgba(0, 0, 0, 0.4);
-            padding: 20px;
         }
 
-        .names {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            font-weight: 300;
+        .title {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
         }
 
-        .save-date {
+        .subtitle {
             font-size: 1.5rem;
-            margin-bottom: 2rem;
+            margin-bottom: 40px;
+            color: rgba(255, 255, 255, 0.9);
         }
 
         .date, .location {
-            font-size: 2rem;
-            margin-bottom: 1rem;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
         }
 
-        .calendar-btn {
-            margin-top: 2rem;
-            padding: 1rem 2rem;
+        .btn {
+            margin-top: 30px;
+            padding: 15px 30px;
             font-size: 1.2rem;
-            background-color: rgba(255, 255, 255, 0.9);
-            color: #333;
+            background-color: rgba(255, 192, 203, 0.9);
+            color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 25px;
             cursor: pointer;
             transition: all 0.3s ease;
         }
 
-        .calendar-btn:hover {
-            background-color: white;
+        .btn:hover {
+            background-color: pink;
             transform: scale(1.05);
         }
 
         @media (max-width: 768px) {
-            .names {
-                font-size: 2.5rem;
+            .title {
+                font-size: 2rem;
             }
-            .save-date {
+            .subtitle {
                 font-size: 1.2rem;
             }
             .date, .location {
@@ -102,37 +100,34 @@
     </style>
 </head>
 <body>
-    <div class="background-media">
-        <!-- Fallback image for mobile -->
-        <img src="wedding-background.jpg" class="background-image" alt="Wedding Background">
-        <video id="background-video" autoplay loop muted playsinline>
-            <source src="AnuarSofia.mp4" type="video/mp4">
-        </video>
-    </div>
-
-    <div class="content">
-        <h1 class="names">Sofia & Anuar</h1>
-        <p class="save-date">Save the Date</p>
+    <video id="video-bg" autoplay loop muted playsinline>
+        <source src="Anuarsofia.mp4" type="video/mp4">
+    </video>
+    <div class="overlay"></div>
+    
+    <div class="container">
+        <h1 class="title">Sofia & Anuar</h1>
+        <p class="subtitle">Save the Date</p>
         <p class="date">March 14th, 2026</p>
         <p class="location">Miami, Florida</p>
-        <button class="calendar-btn" onclick="addToCalendar()">Add to Calendar</button>
+        <button class="btn" onclick="addToCalendar()">Add to Calendar</button>
     </div>
 
     <script>
-        // Check if device can play video
+        // Force video playback on mobile
         document.addEventListener('DOMContentLoaded', function() {
-            const video = document.getElementById('background-video');
-            const img = document.querySelector('.background-image');
+            const video = document.getElementById('video-bg');
             
-            // Function to check if device can autoplay video
-            function canPlayVideo() {
-                const videoTest = document.createElement('video');
-                return !!(videoTest.canPlayType && videoTest.canPlayType('video/mp4').replace(/no/, ''));
-            }
-
-            if (canPlayVideo()) {
-                video.style.display = 'block';
-                img.style.display = 'none';
+            // Try to play video immediately
+            const playPromise = video.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.then(_ => {
+                    // Automatic playback started
+                }).catch(error => {
+                    // Auto-play was prevented
+                    console.log("Video autoplay failed:", error);
+                });
             }
         });
 
