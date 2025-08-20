@@ -3,21 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sofia & Anuar's Wedding</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+    <title>Video Test</title>
     <style>
-        * {
+        body {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Montserrat', sans-serif;
-            min-height: 100vh;
-            color: white;
-            background-color: #718590;
-            position: relative;
+            height: 100vh;
             overflow: hidden;
         }
 
@@ -27,7 +18,6 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -2;
         }
 
         video {
@@ -35,194 +25,41 @@
             height: 100%;
             object-fit: cover;
         }
-
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(113, 133, 144, 0.6);
-            z-index: -1;
-        }
-
-        .container {
-            position: relative;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            text-align: center;
-        }
-
-        .save-date-pill {
-            background: rgba(255, 255, 255, 0.2);
-            padding: 8px 25px;
-            border-radius: 50px;
-            margin-bottom: 40px;
-            font-size: 0.9rem;
-            letter-spacing: 2px;
-            backdrop-filter: blur(5px);
-        }
-
-        .names {
-            font-family: 'Playfair Display', serif;
-            font-size: 4rem;
-            margin-bottom: 15px;
-            font-weight: 400;
-            letter-spacing: 2px;
-        }
-
-        .ampersand {
-            color: #FFB6C1;
-            font-style: italic;
-        }
-
-        .getting-married {
-            font-size: 1.2rem;
-            margin-bottom: 50px;
-            letter-spacing: 1px;
-            font-weight: 300;
-        }
-
-        .info-card {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            padding: 40px;
-            border-radius: 15px;
-            width: 90%;
-            max-width: 500px;
-            margin-bottom: 30px;
-        }
-
-        .label {
-            font-size: 0.8rem;
-            letter-spacing: 2px;
-            margin-bottom: 10px;
-            color: rgba(255, 255, 255, 0.9);
-        }
-
-        .value {
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            margin-bottom: 30px;
-        }
-
-        .value:last-child {
-            margin-bottom: 0;
-        }
-
-        .button {
-            padding: 15px 30px;
-            border-radius: 50px;
-            border: none;
-            cursor: pointer;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-            margin: 10px;
-        }
-
-        .primary-button {
-            background-color: #FFB6C1;
-            color: white;
-        }
-
-        .secondary-button {
-            background-color: rgba(255, 255, 255, 0.2);
-            color: white;
-        }
-
-        .footer-text {
-            margin-top: 30px;
-            font-size: 0.8rem;
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        @media (max-width: 768px) {
-            .names {
-                font-size: 2.5rem;
-            }
-            .info-card {
-                padding: 30px;
-            }
-            .value {
-                font-size: 1.5rem;
-            }
-        }
     </style>
 </head>
 <body>
     <div class="video-container">
         <video autoplay loop muted playsinline>
             <source src="Anuarsofia.mp4" type="video/mp4">
+            Your browser does not support the video tag.
         </video>
-    </div>
-    <div class="overlay"></div>
-
-    <div class="container">
-        <div class="save-date-pill">♡ SAVE THE DATE ♡</div>
-        
-        <h1 class="names">Anuar <span class="ampersand">&</span> Sofia</h1>
-        <p class="getting-married">are getting married</p>
-
-        <div class="info-card">
-            <div class="wedding-date">
-                <p class="label">WEDDING DATE</p>
-                <p class="value">March 14th, 2026</p>
-            </div>
-            
-            <div class="wedding-location">
-                <p class="label">LOCATION</p>
-                <p class="value">Miami, Florida</p>
-            </div>
-        </div>
-
-        <button class="button primary-button" onclick="addToCalendar()">Mark Your Calendar</button>
-        <button class="button secondary-button">Share Our Joy</button>
-
-        <p class="footer-text">Use this to mark your calendar, formal invites to follow!</p>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const video = document.querySelector('video');
+            
+            // Log video loading status
+            video.addEventListener('loadeddata', () => {
+                console.log('Video loaded successfully');
+            });
+
+            video.addEventListener('error', (e) => {
+                console.error('Error loading video:', e);
+            });
+
+            // Try to play video
             const playPromise = video.play();
             if (playPromise !== undefined) {
-                playPromise.catch(error => {
-                    console.log("Video autoplay failed:", error);
-                });
+                playPromise
+                    .then(() => {
+                        console.log('Video playing successfully');
+                    })
+                    .catch(error => {
+                        console.error('Error playing video:', error);
+                    });
             }
         });
-
-        function addToCalendar() {
-            const event = {
-                title: "Sofia & Anuar's Wedding",
-                start: new Date('2026-03-14'),
-                location: 'Miami, Florida'
-            };
-
-            const icsFile = 
-                'BEGIN:VCALENDAR\n' +
-                'VERSION:2.0\n' +
-                'BEGIN:VEVENT\n' +
-                'DTSTART:' + event.start.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z\n' +
-                'SUMMARY:' + event.title + '\n' +
-                'LOCATION:' + event.location + '\n' +
-                'END:VEVENT\n' +
-                'END:VCALENDAR';
-
-            const blob = new Blob([icsFile], { type: 'text/calendar' });
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = 'wedding.ics';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
     </script>
 </body>
 </html>
