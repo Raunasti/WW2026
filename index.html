@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sofia & Anuar's Wedding</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -12,22 +13,27 @@
         }
 
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Montserrat', sans-serif;
             min-height: 100vh;
             color: white;
+            background-color: #718590;
             position: relative;
             overflow: hidden;
         }
 
-        .video-background {
+        .video-container {
             position: fixed;
-            right: 0;
-            bottom: 0;
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             z-index: -2;
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .overlay {
@@ -36,7 +42,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(113, 133, 144, 0.6);
             z-index: -1;
         }
 
@@ -47,129 +53,145 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            text-align: center;
             padding: 20px;
+            text-align: center;
         }
 
-        .save-date-banner {
+        .save-date-pill {
             background: rgba(255, 255, 255, 0.2);
-            padding: 5px 15px;
-            border-radius: 20px;
-            margin-bottom: 30px;
+            padding: 8px 25px;
+            border-radius: 50px;
+            margin-bottom: 40px;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            backdrop-filter: blur(5px);
         }
 
         .names {
-            font-size: 3.5rem;
-            margin-bottom: 20px;
-            font-weight: 300;
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            margin-bottom: 15px;
+            font-weight: 400;
+            letter-spacing: 2px;
+        }
+
+        .ampersand {
+            color: #FFB6C1;
+            font-style: italic;
         }
 
         .getting-married {
-            font-size: 1.5rem;
-            margin-bottom: 40px;
-        }
-
-        .info-box {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 30px;
-            border-radius: 15px;
-            backdrop-filter: blur(5px);
-            margin: 20px 0;
-            width: 80%;
-            max-width: 500px;
-        }
-
-        .date-label, .location-label {
-            font-size: 1rem;
-            color: rgba(255, 255, 255, 0.8);
-            margin-bottom: 5px;
-        }
-
-        .date, .location {
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-        }
-
-        .pink-accent {
-            color: #ffb6c1;
-        }
-
-        .btn {
-            background-color: #ffb6c1;
-            color: white;
-            padding: 15px 30px;
-            border: none;
-            border-radius: 25px;
             font-size: 1.2rem;
+            margin-bottom: 50px;
+            letter-spacing: 1px;
+            font-weight: 300;
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            margin-bottom: 30px;
+        }
+
+        .label {
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .value {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 30px;
+        }
+
+        .value:last-child {
+            margin-bottom: 0;
+        }
+
+        .button {
+            padding: 15px 30px;
+            border-radius: 50px;
+            border: none;
             cursor: pointer;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
             transition: all 0.3s ease;
             margin: 10px;
         }
 
-        .btn:hover {
-            background-color: #ff9aaf;
-            transform: scale(1.05);
+        .primary-button {
+            background-color: #FFB6C1;
+            color: white;
+        }
+
+        .secondary-button {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
         }
 
         .footer-text {
-            margin-top: 20px;
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.7);
+            margin-top: 30px;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.8);
         }
 
         @media (max-width: 768px) {
             .names {
                 font-size: 2.5rem;
             }
-            .date, .location {
-                font-size: 1.5rem;
+            .info-card {
+                padding: 30px;
             }
-            .info-box {
-                width: 90%;
-                padding: 20px;
+            .value {
+                font-size: 1.5rem;
             }
         }
     </style>
 </head>
 <body>
-    <video class="video-background" autoplay loop muted playsinline>
-        <source src="Anuarsofia.mp4" type="video/mp4">
-    </video>
+    <div class="video-container">
+        <video autoplay loop muted playsinline>
+            <source src="Anuarsofia.mp4" type="video/mp4">
+        </video>
+    </div>
     <div class="overlay"></div>
 
     <div class="container">
-        <div class="save-date-banner">SAVE THE DATE ♥</div>
+        <div class="save-date-pill">♡ SAVE THE DATE ♡</div>
         
-        <h1 class="names">Anuar <span class="pink-accent">&</span> Sofia</h1>
+        <h1 class="names">Anuar <span class="ampersand">&</span> Sofia</h1>
         <p class="getting-married">are getting married</p>
 
-        <div class="info-box">
-            <p class="date-label">WEDDING DATE</p>
-            <p class="date">March 14th, 2026</p>
+        <div class="info-card">
+            <div class="wedding-date">
+                <p class="label">WEDDING DATE</p>
+                <p class="value">March 14th, 2026</p>
+            </div>
             
-            <p class="location-label">LOCATION</p>
-            <p class="location">Miami, Florida</p>
+            <div class="wedding-location">
+                <p class="label">LOCATION</p>
+                <p class="value">Miami, Florida</p>
+            </div>
         </div>
 
-        <button class="btn" onclick="addToCalendar()">Mark Your Calendar</button>
-        
+        <button class="button primary-button" onclick="addToCalendar()">Mark Your Calendar</button>
+        <button class="button secondary-button">Share Our Joy</button>
+
         <p class="footer-text">Use this to mark your calendar, formal invites to follow!</p>
     </div>
 
     <script>
-        // Ensure video plays on mobile devices
         document.addEventListener('DOMContentLoaded', function() {
-            const video = document.querySelector('.video-background');
-            
-            // Try to play video immediately
+            const video = document.querySelector('video');
             const playPromise = video.play();
-            
             if (playPromise !== undefined) {
-                playPromise.then(_ => {
-                    // Automatic playback started
-                    console.log("Video playing successfully");
-                }).catch(error => {
-                    // Auto-play was prevented
+                playPromise.catch(error => {
                     console.log("Video autoplay failed:", error);
                 });
             }
