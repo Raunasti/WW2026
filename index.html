@@ -3,62 +3,154 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Test</title>
+    <title>Sofia & Anuar's Wedding</title>
     <style>
-        body {
+        * {
             margin: 0;
             padding: 0;
-            height: 100vh;
-            overflow: hidden;
+            box-sizing: border-box;
         }
 
-        .video-container {
+        body {
+            font-family: 'Arial', sans-serif;
+            color: white;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+
+        #video-background {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -1;
+            object-fit: cover;
+        }
+
+        .overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: -1;
         }
 
-        video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        .content {
+            padding: 20px;
+            z-index: 1;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .date, .location {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .buttons {
+            margin-top: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            margin: 10px;
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #000;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: rgba(255, 255, 255, 1);
+            transform: scale(1.05);
+        }
+
+        #play-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        .hide {
+            display: none !important;
         }
     </style>
 </head>
 <body>
-    <div class="video-container">
-        <video autoplay loop muted playsinline>
-            <source src="Anuarsofia.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
+    <video id="video-background" loop>
+        <source src="Anuarsofia.mp4" type="video/mp4">
+    </video>
+    
+    <button id="play-button">Play With Sound</button>
+    
+    <div class="overlay"></div>
+
+    <div class="content">
+        <h1>Sofia & Anuar</h1>
+        <div class="date">March 14</div>
+        <div class="location">Miami, Florida</div>
+        
+        <div class="buttons">
+            <!-- Add to Calendar button -->
+            <a href="data:text/calendar;charset=utf8,BEGIN:VCALENDAR%0AVERSION:2.0%0ABEGIN:VEVENT%0ADTSTART:20240314T000000Z%0ADTEND:20240314T235959Z%0ASUMMARY:Sofia & Anuar's Wedding%0ALOCATION:Miami, Florida%0AEND:VEVENT%0AEND:VCALENDAR" 
+               class="btn" download="wedding.ics">
+                Add to Calendar
+            </a>
+
+            <!-- RSVP buttons -->
+            <a href="mailto:RSVP@sofia-anuar.com?subject=Wedding RSVP - Yes&body=I will attend the wedding" 
+               class="btn">
+                I'll Be There!
+            </a>
+            
+            <a href="mailto:RSVP@sofia-anuar.com?subject=Wedding RSVP - No&body=Unfortunately, I cannot attend the wedding" 
+               class="btn">
+                Can't Make It
+            </a>
+        </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const video = document.querySelector('video');
-            
-            // Log video loading status
-            video.addEventListener('loadeddata', () => {
-                console.log('Video loaded successfully');
-            });
+        const video = document.getElementById('video-background');
+        const playButton = document.getElementById('play-button');
 
-            video.addEventListener('error', (e) => {
-                console.error('Error loading video:', e);
-            });
+        playButton.addEventListener('click', () => {
+            video.play();
+            video.muted = false;
+            playButton.classList.add('hide');
+        });
 
-            // Try to play video
-            const playPromise = video.play();
-            if (playPromise !== undefined) {
-                playPromise
-                    .then(() => {
-                        console.log('Video playing successfully');
-                    })
-                    .catch(error => {
-                        console.error('Error playing video:', error);
-                    });
-            }
+        // Handle video end
+        video.addEventListener('ended', () => {
+            video.play();
+        });
+
+        // Start video muted (this will allow autoplay)
+        window.addEventListener('load', () => {
+            video.muted = true;
+            video.play();
         });
     </script>
 </body>
