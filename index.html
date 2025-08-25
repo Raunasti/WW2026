@@ -26,7 +26,7 @@
 
         #video-background {
             position: fixed;
-            right: -50%; /* This is the key change that was working */
+            right: 0;
             bottom: 0;
             min-width: 100%;
             min-height: 100%;
@@ -35,6 +35,20 @@
             z-index: -1;
             object-fit: cover;
             pointer-events: none;
+        }
+
+        /* Mobile-specific video positioning */
+        @media only screen and (max-width: 768px) {
+            #video-background {
+                object-position: 70% center;
+            }
+        }
+
+        /* Desktop-specific video positioning */
+        @media only screen and (min-width: 769px) {
+            #video-background {
+                object-position: center center;
+            }
         }
 
         .overlay {
