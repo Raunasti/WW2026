@@ -34,21 +34,8 @@
             height: auto;
             z-index: -1;
             object-fit: cover;
+            object-position: 70% center;
             pointer-events: none;
-        }
-
-        /* Mobile-specific video positioning */
-        @media only screen and (max-width: 768px) {
-            #video-background {
-                object-position: 70% center;
-            }
-        }
-
-        /* Desktop-specific video positioning */
-        @media only screen and (min-width: 769px) {
-            #video-background {
-                object-position: center center;
-            }
         }
 
         .overlay {
