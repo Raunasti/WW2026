@@ -21,6 +21,7 @@
             justify-content: center;
             text-align: center;
             position: relative;
+            overflow: hidden; /* Prevent scrolling */
         }
 
         #video-background {
@@ -33,6 +34,7 @@
             height: auto;
             z-index: -1;
             object-fit: cover;
+            pointer-events: none; /* Prevents video interaction */
         }
 
         .overlay {
@@ -42,10 +44,11 @@
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.5);
-            z-index: -1;
+            z-index: 0;
         }
 
         .content {
+            position: relative;
             padding: 20px;
             z-index: 1;
         }
@@ -81,7 +84,7 @@
             transform: scale(1.05);
         }
 
-        #play-button {
+        #sound-toggle {
             position: fixed;
             top: 20px;
             right: 20px;
@@ -92,18 +95,14 @@
             cursor: pointer;
             z-index: 2;
         }
-
-        .hide {
-            display: none !important;
-        }
     </style>
 </head>
 <body>
-    <video id="video-background" loop>
+    <video id="video-background" playsinline autoplay muted loop>
         <source src="Anuarsofia.mp4" type="video/mp4">
     </video>
     
-    <button id="play-button">Play With Sound</button>
+    <button id="sound-toggle">Turn Sound On</button>
     
     <div class="overlay"></div>
 
@@ -134,23 +133,29 @@
 
     <script>
         const video = document.getElementById('video-background');
-        const playButton = document.getElementById('play-button');
+        const soundToggle = document.getElementById('sound-toggle');
+        
+        // Ensure video plays automatically
+        function playVideo() {
+            video.play().catch(function(error) {
+                console.log("Video autoplay failed:", error);
+            });
+        }
 
-        playButton.addEventListener('click', () => {
-            video.play();
-            video.muted = false;
-            playButton.classList.add('hide');
-        });
+        // Try to play video as soon as possible
+        playVideo();
+        window.addEventListener('load', playVideo);
+        document.addEventListener('touchstart', playVideo, {once: true});
 
-        // Handle video end
-        video.addEventListener('ended', () => {
-            video.play();
-        });
-
-        // Start video muted (this will allow autoplay)
-        window.addEventListener('load', () => {
-            video.muted = true;
-            video.play();
+        // Sound toggle functionality
+        soundToggle.addEventListener('click', () => {
+            if (video.muted) {
+                video.muted = false;
+                soundToggle.textContent = 'Turn Sound Off';
+            } else {
+                video.muted = true;
+                soundToggle.textContent = 'Turn Sound On';
+            }
         });
     </script>
 </body>
