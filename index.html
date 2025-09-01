@@ -249,15 +249,35 @@
     };
 
     // RSVP form handler
+    
     document.getElementById('rsvp-form').onsubmit = function(e) {
-        e.preventDefault();
-        const name = document.getElementById('rsvp-name').value;
-        const email = document.getElementById('rsvp-email').value;
-        const subject = encodeURIComponent("Wedding RSVP - Yes");
-        const body = encodeURIComponent(`I will attend the wedding.\nName: ${name}\nEmail: ${email}`);
-        window.location.href = `mailto:RSVP@sofia-anuar.com?subject=${subject}&body=${body}`;
+    e.preventDefault();
+    const name = document.getElementById('rsvp-name').value;
+    const email = document.getElementById('rsvp-email').value;
+
+    // Send to Google Apps Script Web App
+    fetch('https://script.google.com/macros/s/AKfycbzOe9XEqX0noh2gSB7Ew-Tmzj7uMSGNkxC0D6AwkwbcZ_Oe4-aRgOpZNmnQhlEbTUMI/exec', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}`
+    })
+    .then(response => response.text())
+    .then(result => {
+        alert('RSVP sent! Thank you.');
         document.getElementById('popup-modal').style.display = 'none';
+    })
+    .catch(error => {
+        alert('Error sending RSVP.');
+    });
+
+    // Optionally, still open mail client
+    /*
+    const subject = encodeURIComponent("Wedding RSVP - Yes");
+    const body = encodeURIComponent(`I will attend the wedding.\nName: ${name}\nEmail: ${email}`);
+    window.location.href = `mailto:RSVP@sofia-anuar.com?subject=${subject}&body=${body}`;
+    */
     };
+</script>
     </script>
 
 
