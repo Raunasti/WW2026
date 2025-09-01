@@ -198,10 +198,10 @@
     <div id="popup-modal" class="modal">
         <div class="modal-content">
             <span class="close" id="close-modal">&times;</span>
-            <h2>RSVP: I'll Be There!</h2>
+            <h2 style="color: #000;">RSVP: I'll Be There!</h2>
             <form>
-                <input type="text" placeholder="Your Name" required><br><br>
-                <input type="email" placeholder="Your Email" required><br><br>
+                <input type="text" id="rsvp-email" placeholder="Your Name" required><br><br>
+                <input type="email" id="rsvp-name" placeholder="Your Email" required><br><br>
                 <button type="submit" class="btn">Send RSVP</button>
             </form>
         </div>
@@ -232,8 +232,9 @@
         });
     </script>
 
+    
     <script>
-    // ...existing code...
+    // Pop-up script
         document.getElementById('open-modal').onclick = function() {
         document.getElementById('popup-modal').style.display = 'flex';
     };
@@ -246,7 +247,20 @@
                 modal.style.display = 'none';
             }
     };
-    // ...existing code...
-</script>
+
+    // RSVP form handler
+    document.getElementById('rsvp-form').onsubmit = function(e) {
+        e.preventDefault();
+        const name = document.getElementById('rsvp-name').value;
+        const email = document.getElementById('rsvp-email').value;
+        const subject = encodeURIComponent("Wedding RSVP - Yes");
+        const body = encodeURIComponent(`I will attend the wedding.\nName: ${name}\nEmail: ${email}`);
+        window.location.href = `mailto:RSVP@sofia-anuar.com?subject=${subject}&body=${body}`;
+        document.getElementById('popup-modal').style.display = 'none';
+    };
+    </script>
+
+
+
 </body>
 </html>
