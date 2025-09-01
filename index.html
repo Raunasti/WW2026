@@ -177,14 +177,14 @@
                class="btn" download="wedding.ics">
                 Add to Calendar
             </a>
-            <!--
+            
             /* RSVP buttons
             <a href="mailto:RSVP@sofia-anuar.com?subject=Wedding RSVP - Yes&body=I will attend the wedding" 
                class="btn">
                 I'll Be There!
             </a>
-            -->            
-            <button id="open-modal" class="btn">I'll Be There!</button>
+                 
+            <!-- <button id="open-modal" class="btn">I'll Be There!</button> -->
             
             <a href="mailto:RSVP@sofia-anuar.com?subject=Wedding RSVP - No&body=Unfortunately, I cannot attend the wedding" 
                class="btn">
@@ -247,14 +247,14 @@
                 modal.style.display = 'none';
             }
     };
-
+    
     // RSVP form handler
     
     document.getElementById('rsvp-form').onsubmit = function(e) {
     e.preventDefault();
     const name = document.getElementById('rsvp-name').value;
     const email = document.getElementById('rsvp-email').value;
-
+        /*
     // Send to Google Apps Script Web App
     fetch('https://script.google.com/macros/s/AKfycbzOe9XEqX0noh2gSB7Ew-Tmzj7uMSGNkxC0D6AwkwbcZ_Oe4-aRgOpZNmnQhlEbTUMI/exec', {
         method: 'POST',
